@@ -1,0 +1,74 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<boot-camp-gateway (2)>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.example.Application",
+            "projectName": "boot-camp-gateway (2)",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-HairshopApplication<hairshop>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "hairshop.reservation.HairshopApplication",
+            "projectName": "hairshop",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ReservationApplication<reservation (2)>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "hairshop.reservation.ReservationApplication",
+            "projectName": "reservation (2)",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-PaymentApplication<payment (2)>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "hairshop.reservation.PaymentApplication",
+            "projectName": "payment (2)",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-PaymentApplication<payment>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "hairshop.reservation.PaymentApplication",
+            "projectName": "payment",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ReservationApplication<reservation>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "hairshop.reservation.ReservationApplication",
+            "projectName": "reservation",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<boot-camp-gateway>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.example.Application",
+            "projectName": "boot-camp-gateway",
+            "args": ""
+        }
+    ]
+}
