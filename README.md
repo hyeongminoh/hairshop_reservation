@@ -1,4 +1,4 @@
-![image](https://user-images.githubusercontent.com/29780972/135097518-f3f7e4b3-7edc-44ca-a321-cc460aa155b3.png)
+![image](https://user-images.githubusercontent.com/29780972/135097518-f3f7e4b3-7edc-44ca-a321-cc460aa155b3.png){: width="200" height="100"}
 
 # hairshop_reservation
 spring boot를 활용한 미용실 예약 플랫폼
@@ -91,6 +91,7 @@ spring boot를 활용한 미용실 예약 플랫폼
 ```
 
 ## CQRS
+
 미용실 예약/취소/매핑 등 총 Status 및 배정된 미용사에 대하여 고객이 조회 할 수 있도록 CQRS 로 구현하였다.
 - 비동기식으로 처리되어 발행된 이벤트 기반 Kafka 를 통해 수신/처리 되어 별도 Table 에 관리한다
 - Table 모델링
@@ -98,21 +99,26 @@ spring boot를 활용한 미용실 예약 플랫폼
 
 - mypage MSA PolicyHandler를 통해 구현
    ("ReservationPlaced" 이벤트 발생 시, Pub/Sub 기반으로 별도 테이블에 저장)
+   
 ![image](https://user-images.githubusercontent.com/29780972/135101051-00a7a146-b847-49c6-8f6b-7e308cc75e2c.png)
 
  ("ReservationCompleted" 이벤트 발생 시, Pub/Sub 기반으로 별도 테이블에 저장)
+ 
  ![image](https://user-images.githubusercontent.com/29780972/135101282-61175efb-3ae9-43e0-844b-38e8445d67fe.png)
 
  ("CancelCompleted" 이벤트 발생 시, Pub/Sub 기반으로 별도 테이블에 저장)
+ 
  ![image](https://user-images.githubusercontent.com/29780972/135103809-1f5d8dc1-a971-4e55-994e-3ae393dca010.png)
 
 
 
 - 실제로 view 페이지를 조회해 보면 모든 room에 대한 정보, 예약 상태, 결제 상태 등의 정보를 종합적으로 알 수 있다.
+- 
 ![image](https://user-images.githubusercontent.com/29780972/135103894-8081f9e4-8cb7-45d4-9faf-b3fac5918cf2.png)
 
 
 ## API 게이트웨이
+
 ![image](https://user-images.githubusercontent.com/29780972/135102501-a3646647-7767-4724-bffe-8e5330f909f2.png)
 
 ## Correlation
@@ -130,24 +136,28 @@ hairshop_reservation 프로젝트에서는 PolicyHandler에서 처리 시 어떤
 http POST http://localhost:8088/reservations customerId=OHM date=20211001  stylingType=perm
 
 - 예약 후 -> 미용실 상태
- http GET http://localhost:8088/hairshops
- ![image](https://user-images.githubusercontent.com/29780972/135105736-704e832c-1c3b-42ff-8e99-0c0be9c1f3c3.png)
+  http GET http://localhost:8088/hairshops
+ 
+![image](https://user-images.githubusercontent.com/29780972/135105736-704e832c-1c3b-42ff-8e99-0c0be9c1f3c3.png)
 
 
 - 예약 후 -> 예약 상태
- http GET http://localhost:8088/reservations
+  http GET http://localhost:8088/reservations
+ 
 ![image](https://user-images.githubusercontent.com/29780972/135108098-96719162-1f32-4acb-8423-e026fac400ab.png)
 
 - 예약 취소
-http PATCH http://localhost:8088/reservations/2 status=CANCEL_REQUESTED
+ http PATCH http://localhost:8088/reservations/2 status=CANCEL_REQUESTED
 
 - 취소 후 - 미용실 상태
- http GET http://localhost:8088/hairshops
+  http GET http://localhost:8088/hairshops
+ 
 ![image](https://user-images.githubusercontent.com/29780972/135106170-11564325-494b-46ff-95a5-07024ef7d10b.png)
 
 - 취소 후 - 예약 상태
- http GET http://localhost:8088/reservations
- ![image](https://user-images.githubusercontent.com/29780972/135108199-c76e4e23-988f-45b9-a045-27cc592301bc.png)
+  http GET http://localhost:8088/reservations
+  
+![image](https://user-images.githubusercontent.com/29780972/135108199-c76e4e23-988f-45b9-a045-27cc592301bc.png)
 
 
 
