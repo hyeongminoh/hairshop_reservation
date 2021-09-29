@@ -48,6 +48,8 @@ spring boot를 활용한 미용실 예약 플랫폼
     1. 미용실 예약에 대한 정보 및 예약 상태 등을 한 화면에서 확인 할 수 있다. CQRS
 
  - View Model 추가
+ ![image](https://user-images.githubusercontent.com/29780972/135188276-92b75ef6-4270-4417-836c-8b3af5d480a2.png)
+
 
 ![image](https://user-images.githubusercontent.com/29780972/135099574-dceaaa9c-6b56-449a-8488-d9d023236f30.png)
 
