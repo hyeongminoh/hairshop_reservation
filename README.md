@@ -95,6 +95,8 @@ spring boot를 활용한 미용실 예약 플랫폼
 미용실 예약/취소/매핑 등 총 Status 및 배정된 미용사에 대하여 고객이 조회 할 수 있도록 CQRS 로 구현하였다.
 - 비동기식으로 처리되어 발행된 이벤트 기반 Kafka 를 통해 수신/처리 되어 별도 Table 에 관리한다
 - Table 모델링
+
+
 ![image](https://user-images.githubusercontent.com/29780972/135100776-d94f3c61-17b8-49af-86db-2a5e0e478016.png)
 
 - mypage MSA PolicyHandler를 통해 구현
