@@ -16,6 +16,8 @@ public class Reservation {
     private String date;
     private String stylingType;
     private String status;
+    private String shopstatus;
+    private String paystatus;
 
     @PostPersist
     public void onPostPersist(){
@@ -47,6 +49,9 @@ public class Reservation {
     public void onPrePersist(){
         System.out.println(" ============== 미용실 예약 요청 전 ============== ");
         status = "RSV_REQUESTED";
+        shopstatus = "NULL";
+        paystatus = "NULL";
+
     }
 
     @PostUpdate
@@ -98,7 +103,21 @@ public class Reservation {
         this.status = status;
     }
 
+    public String getShopStatus() {
+        return shopstatus;
+    }
 
+    public void setShopStatus(String shopstatus) {
+        this.shopstatus = shopstatus;
+    }
 
+    
+    public String getPayStatus() {
+        return paystatus;
+    }
+
+    public void setPayStatus(String paystatus) {
+        this.paystatus = paystatus;
+    }
 
 }

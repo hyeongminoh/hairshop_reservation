@@ -41,6 +41,11 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 
+		<dependency> 
+			<groupId>org.mariadb.jdbc</groupId> 
+			<artifactId>mariadb-java-client</artifactId> 
+		</dependency>
+
 
 		<!-- kafka streams -->
 		<dependency>

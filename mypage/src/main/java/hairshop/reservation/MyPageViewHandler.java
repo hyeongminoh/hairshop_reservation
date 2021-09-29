@@ -17,6 +17,7 @@ public class MyPageViewHandler {
     @Autowired
     private MyPageRepository myPageRepository;
 
+    //고객이 미용예약을 요청함
     @StreamListener(KafkaProcessor.INPUT)
     public void whenReservationPlaced_then_CREATE_1 (@Payload ReservationPlaced reservationPlaced) {
         try {
@@ -40,7 +41,7 @@ public class MyPageViewHandler {
         }
     }
 
-
+    //예약이 완료됨
     @StreamListener(KafkaProcessor.INPUT)
     public void whenReservationCompleted_then_UPDATE_1(@Payload ReservationCompleted reservationCompleted) {
         try {
@@ -51,6 +52,7 @@ public class MyPageViewHandler {
                     for(MyPage myPage : myPageList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     myPage.setDesignerId(reservationCompleted.getDesignerId());
+                    myPage.setStatus("Reservation Completed");
                 // view 레파지 토리에 save
                 myPageRepository.save(myPage);
                 }
@@ -59,6 +61,29 @@ public class MyPageViewHandler {
             e.printStackTrace();
         }
     }
+
+    //예약이 취소됨
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenCancelCompleted_then_UPDATE_2(@Payload CancelCompleted cancelCompleted) {
+        try {
+            if (!cancelCompleted.validate()) return;
+                // view 객체 조회
+
+                    List<MyPage> myPageList = myPageRepository.findByReservationId(cancelCompleted.getId());
+                    for(MyPage myPage : myPageList){
+                    // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    myPage.setStatus("Reservation Canceled");
+                    myPage.setDesignerId(cancelCompleted.getDesignerId());
+                // view 레파지 토리에 save
+                myPageRepository.save(myPage);
+                }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    /*
     @StreamListener(KafkaProcessor.INPUT)
     public void whenReservationCanceled_then_UPDATE_2(@Payload ReservationCanceled reservationCanceled) {
         try {
@@ -68,7 +93,7 @@ public class MyPageViewHandler {
                     List<MyPage> myPageList = myPageRepository.findByReservationId(reservationCanceled.getId());
                     for(MyPage myPage : myPageList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    myPage.setStatus(reservationCanceled.getStatus());
+                    myPage.setStatus("Reservation Canceled");
                     myPage.setDate(reservationCanceled.getDate());
                     myPage.setDesignerId(reservationCanceled.getStylingType());
                 // view 레파지 토리에 save
@@ -78,7 +103,7 @@ public class MyPageViewHandler {
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
+    }*/
 
 }
 

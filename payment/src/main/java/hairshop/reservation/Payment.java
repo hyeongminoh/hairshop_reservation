@@ -14,6 +14,7 @@ public class Payment {
     private Long id;
     private Long reservationId;
     private String status;
+    private String rsvstatus;
 
     @PostPersist
     public void onPostPersist(){
@@ -30,6 +31,8 @@ public class Payment {
     public void onPrePersist(){
         System.out.println(" ============== 예약 결제 전 ============== ");
         status = "PAY_COMPLETED";
+        rsvstatus = "RSV_REQUESTED";
+    
     }
 
     @PostUpdate
@@ -54,12 +57,21 @@ public class Payment {
     public void setReservationId(Long reservationId) {
         this.reservationId = reservationId;
     }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRsvStatus() {
+        return rsvstatus;
+    }
+
+    public void setRsvStatus(String rsvstatus) {
+        this.rsvstatus = rsvstatus;
     }
 
 

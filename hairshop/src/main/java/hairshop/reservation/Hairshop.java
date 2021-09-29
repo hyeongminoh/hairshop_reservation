@@ -14,6 +14,7 @@ public class Hairshop {
     private Long id;
     private Long reservationId;
     private String designerId;
+    private String rsvstatus;
 
     @PostPersist
     public void onPostPersist(){
@@ -52,6 +53,14 @@ public class Hairshop {
 
     public void setDesignerId(String designerId) {
         this.designerId = designerId;
+    }
+
+    public String getRsvStatus() {
+        return rsvstatus;
+    }
+
+    public void setRsvStatus(String rsvstatus) {
+        this.rsvstatus = rsvstatus;
     }
 
 

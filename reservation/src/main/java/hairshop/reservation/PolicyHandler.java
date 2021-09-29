@@ -24,7 +24,9 @@ public class PolicyHandler{
         // Sample Logic //
         //예약 완료 된 예약 찾기
         Reservation reservation = reservationRepository.findById(reservationCompleted.getReservationId()).get();
-        reservation.setStatus("RSV_COMPLETED(Designer Matched)");
+        reservation.setStatus("Reservation Completed");
+        reservation.setShopStatus("Designer Matched");
+        reservation.setPayStatus("Pay Finished");
         reservationRepository.save(reservation);
 
     }
@@ -41,6 +43,8 @@ public class PolicyHandler{
         // Sample Logic //
         Reservation reservation = reservationRepository.findById(cancelCompleted.getId()).get();
         reservation.setStatus("Reservation Canceled");
+        reservation.setShopStatus("Designer Deleted");
+        reservation.setPayStatus("Pay Canceled");
         reservationRepository.save(reservation);
 
     }

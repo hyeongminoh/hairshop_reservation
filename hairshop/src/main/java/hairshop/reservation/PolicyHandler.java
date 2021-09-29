@@ -33,10 +33,12 @@ public class PolicyHandler{
             hairshop.setDesignerId("ParkJun");
         }*/
         hairshop.setDesignerId("ChaHong");
+        hairshop.setRsvStatus("RSV_REQUESTED");
         
         hairshopRepository.save(hairshop);
 
     }
+    
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverReservationCanceled_CancelReservation(@Payload ReservationCanceled reservationCanceled){
 
@@ -49,6 +51,7 @@ public class PolicyHandler{
         // Sample Logic //
         Hairshop tmp = hairshopRepository.findByReservationId(reservationCanceled.getId());
         tmp.setDesignerId("CANCELED");
+        tmp.setRsvStatus("RSV_CANCELED");
         hairshopRepository.save(tmp);
 
     }

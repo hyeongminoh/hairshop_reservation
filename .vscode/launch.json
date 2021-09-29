@@ -69,6 +69,16 @@
             "mainClass": "com.example.Application",
             "projectName": "boot-camp-gateway",
             "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MypageApplication<mypage>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "hairshop.reservation.MypageApplication",
+            "projectName": "mypage",
+            "args": ""
         }
     ]
 }
