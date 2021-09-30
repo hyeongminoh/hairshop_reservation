@@ -100,6 +100,18 @@ phases:
                       timeoutSeconds: 2
                       periodSeconds: 5
                       failureThreshold: 10
+                    livenessProbe:
+                      #httpGet:
+                      #  path: /actuator/health
+                      #  port: 8080
+                      exec:
+                        command:
+                        - cat
+                        - /tmp/healthy
+                      initialDelaySeconds: 120
+                      timeoutSeconds: 2
+                      periodSeconds: 5
+                      failureThreshold: 5
           EOF
 cache:
   paths:
