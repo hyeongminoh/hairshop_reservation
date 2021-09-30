@@ -672,7 +672,8 @@ livenessProbe:
 ```
 
 
- pod 상태 확인
+pod 상태 확인
+
 ![image](https://user-images.githubusercontent.com/29780972/135411059-c1043806-6261-4987-aac0-c8d259121517.png)
 
 
@@ -689,4 +690,5 @@ kubectl exec -it pod/user04-customer-5b7c4b6d7-p95n7 -n hotels -- touch /tmp/hea
 ```
 
 성공 확인
+
 ![image](https://user-images.githubusercontent.com/29780972/135411113-78740dfe-91bb-4e3c-af6e-302943b8731d.png)
