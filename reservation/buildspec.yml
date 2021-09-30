@@ -81,12 +81,6 @@ phases:
                     image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$_PROJECT_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
                     ports:
                       - containerPort: 8080
-                    env:
-                    - name: apiurl
-                      valueFrom:
-                        configMapKeyRef:
-                          name: hairshop-configmap
-                          key: apiurl 
                     resources:
                       requests:
                         cpu: "250m"
@@ -104,10 +98,6 @@ phases:
                       httpGet:
                         path: /actuator/health
                         port: 8080
-                      # exec:
-                      #   command:
-                      #   - cat
-                      #   - /tmp/healthy
                       initialDelaySeconds: 120
                       timeoutSeconds: 2
                       periodSeconds: 5
