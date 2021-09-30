@@ -506,4 +506,63 @@ spring:
 
 ## CI/CD 설정
 
+각 구현체들은 각자의 source repository 에 구성되었고, 사용한 CI/CD 플랫폼은 AWS를 사용하였으며, pipeline build script 는 각 프로젝트 폴더 이하 buildspec.yml 에 포함되었다.
+
+AWS CodeBuild 적용 현황
+![image](https://user-images.githubusercontent.com/29780972/135394925-583a19f4-166b-4537-b9f2-a30f6bfee119.png)
+
+webhook을 통한 CI 확인
+![image](https://user-images.githubusercontent.com/29780972/135394973-c24ce3c7-6239-47ba-86ee-311503b2ecda.png)
+
+AWS ECR 적용 현황
+![image](https://user-images.githubusercontent.com/29780972/135395046-c547ecd0-9c07-4cd6-8520-59eae642ee88.png)
+
+
+EKS에 배포된 내용
+![image](https://user-images.githubusercontent.com/29780972/135395112-73cc077d-5db8-4450-ba95-49e62292445c.png)
+
+
+## ConfigMap 설정
+
+
+ 동기 호출 URL을 ConfigMap에 등록하여 사용
+ 
+  kubectl apply -f configmap
+
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: hairshop-configmap
+    namespace: hairshop-reservation
+data:
+    apiurl: "http://user13-gateway:8080"
+```
+
+buildspec 수정
+
+```
+spec:
+                containers:
+                  - name: $_PROJECT_NAME
+                    image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$_PROJECT_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
+                    ports:
+                      - containerPort: 8080
+                    env:
+                    - name: apiurl
+                      valueFrom:
+                        configMapKeyRef:
+                          name: hairshop-configmap
+                          key: apiurl 
+```
+
+application.yml 수정
+```
+prop:
+  aprv:
+    url: ${apiurl}
+```
+
+동기 호출 URL 실행
+
 
