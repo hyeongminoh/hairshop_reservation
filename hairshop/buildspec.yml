@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    _PROJECT_NAME: "hairshop"
+    _PROJECT_NAME: "user13-hairshop"
     _DIR_NAME: "hairshop"
     _NAMESPACE: "hairshop-reservation"
 
