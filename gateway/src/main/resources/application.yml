@@ -44,19 +44,19 @@ spring:
     gateway:
       routes:
         - id: reservation
-          uri: http://reservation:8080
+          uri: http://user13-reservation:8080
           predicates:
             - Path=/reservations/** 
         - id: payment
-          uri: http://payment:8080
+          uri: http://user13-payment:8080
           predicates:
             - Path=/payments/** 
         - id: hairshop
-          uri: http://hairshop:8080
+          uri: http://user13-hairshop:8080
           predicates:
             - Path=/hairshops/** 
         - id: mypage
-          uri: http://mypage:8080
+          uri: http://user13-mypage:8080
           predicates:
             - Path= /myPages/**
       globalcors:
