@@ -4,7 +4,7 @@ env:
   variables:
     _PROJECT_NAME: "payment"
     _DIR_NAME: "payment"
-    _NAMESPACE: "hairshop"
+    _NAMESPACE: "hairshop_reservation"
 
 phases:
   install:
