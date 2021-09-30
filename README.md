@@ -564,5 +564,67 @@ prop:
 ```
 
 동기 호출 URL 실행
+![image](https://user-images.githubusercontent.com/29780972/135396430-af578678-e9da-4204-8e51-3cd0797a2473.png)
+
+## 동기식 호출 / 서킷 브레이킹 / 장애격리
+
+### 오토스케일 아웃
+앞서 CB 는 시스템을 안정되게 운영할 수 있게 해줬지만 사용자의 요청을 100% 받아들여주지 못했기 때문에 이에 대한 보완책으로 자동화된 확장 기능을 적용하고자 한다. 
+
+## 무정지 재배포
+
+* 먼저 무정지 재배포가 100% 되는 것인지 확인하기 위해서 Autoscaler 이나 CB 설정을 제거함
+
+- seige 로 배포작업 직전에 워크로드를 모니터링 함.	
+```
+siege -c100 -t10S -v --content-type "application/json" 'http://user04-customer:8080/reservations'
+
+```
+
+```
+# buildspec.yaml 의 readiness probe 의 설정:
+
+                    readinessProbe:
+                      httpGet:
+                        path: /actuator/health
+                        port: 8080
+                      initialDelaySeconds: 10
+                      timeoutSeconds: 2
+                      periodSeconds: 5
+                      failureThreshold: 10
+```
+
+Customer 서비스 신규 버전으로 배포
+
+배포기간 동안 Availability 가 변화없기 때문에 무정지 재배포가 성공한 것으로 확인됨.
+
+## Liveness Probe
+
+테스트를 위해 buildspec.yml을 아래와 같이 수정 후 배포
+
+```
+livenessProbe:
+                      # httpGet:
+                      #   path: /actuator/health
+                      #   port: 8080
+                      exec:
+                        command:
+                        - cat
+                        - /tmp/healthy
+```
 
 
+ pod 상태 확인
+ 
+ kubectl describe ~ 로 pod에 들어가서 아래 메시지 확인
+ ```
+ Warning  Unhealthy  26s (x2 over 31s)     kubelet            Liveness probe failed: cat: /tmp/healthy: No such file or directory
+ ```
+
+/tmp/healthy 파일 생성
+```
+kubectl exec -it pod/user04-customer-5b7c4b6d7-p95n7 -n hotels -- touch /tmp/healthy
+```
+
+
+성공 확인
