@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: hairshop-configmap
+    namespace: hairshop-reservation
+data:
+    apiurl: "http://user13-gateway:8080"
