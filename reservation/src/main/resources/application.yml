@@ -67,5 +67,5 @@ spring:
           destination: hairshop.reservation
           contentType: application/json
 prop:
-  room:
+  aprv:
     url: ${apiurl}
