@@ -579,6 +579,50 @@ prop:
 
 ## 동기식 호출 / 서킷 브레이킹 / 장애격리
 
+* 서킷 브레이킹 프레임워크의 선택: istio의 Destination Rule을 적용 Traffic 관리함.
+
+시나리오는 예약(reservation)-->결제(payment) 시의 연결을 RESTful Request/Response 로 연동하여 구현이 되어있고, 결제 요청이 과도할 경우 CB 를 통하여 장애격리.
+
+* 부하테스터 siege 툴을 통한 서킷 브레이커 동작 확인:
+- 동시사용자 10명
+- 10초 동안 실시
+
+```
+siege -c10 -t10s -v http://user04-gateway:8080/payments 
+
+```
+![image](https://user-images.githubusercontent.com/29780972/135397669-9cc450f5-c40a-44e7-9b2b-c4fab8b9547c.png)
+
+CB가 없기 때문에 100% 성공
+
+```
+kubectl apply -f destinationRule -n hairshop-reservation
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+    name: dr-payment
+    namespace: hairshop-reservation
+spec:
+    host: user13-payment
+    trafficPolicy:
+        connectionPool:
+            http:
+                http1MaxPendingRequests: 1
+                maxRequestsPerConnection: 1
+```
+![image](https://user-images.githubusercontent.com/29780972/135400069-168864fc-8639-4613-a38d-6454143f17dd.png)
+
+
+istio-injection 활성화 및 room pod container 확인
+![image](https://user-images.githubusercontent.com/29780972/135400115-8c78c98c-5cd8-49f0-9456-2fe3fea88316.png)
+
+
+
+CB적용 되어 일부 실패 확인
+
+
+
 ### 오토스케일 아웃
 앞서 CB 는 시스템을 안정되게 운영할 수 있게 해줬지만 사용자의 요청을 100% 받아들여주지 못했기 때문에 이에 대한 보완책으로 자동화된 확장 기능을 적용하고자 한다. 
 
@@ -588,7 +632,7 @@ prop:
 
 - seige 로 배포작업 직전에 워크로드를 모니터링 함.	
 ```
-siege -c100 -t10S -v --content-type "application/json" 'http://user04-customer:8080/reservations'
+siege -c100 -t10S -v --content-type "application/json" 'http://a591a265c2dd941c7b527c3737d49de6-753212419.ap-southeast-1.elb.amazonaws.com:8080/reservations'
 
 ```
 
@@ -605,7 +649,10 @@ siege -c100 -t10S -v --content-type "application/json" 'http://user04-customer:8
                       failureThreshold: 10
 ```
 
-Customer 서비스 신규 버전으로 배포
+reservation 서비스 신규 버전으로 배포
+
+![image](https://user-images.githubusercontent.com/29780972/135409768-a18795fc-32b2-4499-85bf-8d11504c2bb2.png)
+
 
 배포기간 동안 Availability 가 변화없기 때문에 무정지 재배포가 성공한 것으로 확인됨.
 
@@ -626,16 +673,20 @@ livenessProbe:
 
 
  pod 상태 확인
- 
+ ![image](https://user-images.githubusercontent.com/29780972/135411059-c1043806-6261-4987-aac0-c8d259121517.png)
+
+
  kubectl describe ~ 로 pod에 들어가서 아래 메시지 확인
  ```
  Warning  Unhealthy  26s (x2 over 31s)     kubelet            Liveness probe failed: cat: /tmp/healthy: No such file or directory
  ```
+![image](https://user-images.githubusercontent.com/29780972/135410833-c50b0fe8-719d-4998-9e21-5cb3001639d8.png)
+
 
 /tmp/healthy 파일 생성
 ```
 kubectl exec -it pod/user04-customer-5b7c4b6d7-p95n7 -n hotels -- touch /tmp/healthy
 ```
 
-
 성공 확인
+![image](https://user-images.githubusercontent.com/29780972/135411113-78740dfe-91bb-4e3c-af6e-302943b8731d.png)
