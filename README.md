@@ -521,6 +521,17 @@ AWS ECR 적용 현황
 EKS에 배포된 내용
 ![image](https://user-images.githubusercontent.com/29780972/135395112-73cc077d-5db8-4450-ba95-49e62292445c.png)
 
+AWS 주소로 GET 확인
+
+http GET http://a5f96d3b2b238462fa74fd87f34e4939-61865795.ap-southeast-1.elb.amazonaws.com:8080/hairshops
+![image](https://user-images.githubusercontent.com/29780972/135396671-3003cea8-bee9-4ea7-ae54-4f2881269623.png)
+
+http GET http://a5f96d3b2b238462fa74fd87f34e4939-61865795.ap-southeast-1.elb.amazonaws.com:8080/reservations
+![image](https://user-images.githubusercontent.com/29780972/135396719-5fa4b451-1a9c-4b2f-8725-a2bd8a98357b.png)
+
+http GET http://a5f96d3b2b238462fa74fd87f34e4939-61865795.ap-southeast-1.elb.amazonaws.com:8080/payments
+![image](https://user-images.githubusercontent.com/29780972/135396791-6c39a20e-7d5b-4035-acac-fc55ebc1fff8.png)
+
 
 ## ConfigMap 설정
 
